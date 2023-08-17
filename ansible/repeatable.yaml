@@ -1,0 +1,16 @@
+---
+- name: 
+  hosts: ansible_host
+  tasks:
+  - name: container stop
+    command: docker stop my-hello-world-container
+  - name: container delete
+    command: docker rm my-hello-world-container
+  - name: image delete
+    command: docker rmi my-hello-world
+  - name: build docker image with war file
+    command: docker build -t my-hello-world .
+    args:
+      chdir: /home/vagrant/hello-world
+  - name: run container with my image
+    command: docker run -d --name my-hello-world-container -p 8080:8080 my-hello-world
